@@ -19,4 +19,5 @@ cppcheck_report.txt
 secure_boot_signing_key.pem
 *_signing_key.pem
 
+dist/
 .pre-commit-config.yaml
