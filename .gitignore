@@ -18,3 +18,5 @@ cppcheck_report.txt
 # Secure boot signing keys - never commit private keys
 secure_boot_signing_key.pem
 *_signing_key.pem
+
+.pre-commit-config.yaml
