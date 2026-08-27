@@ -1,7 +1,7 @@
 ## IDF Component Manager Manifest File
 version: 1.6.0
-description: Espressif's Matter SDK Component
-url: https://github.com/espressif/esp-matter
+description: Espressif's Matter SDK Component with ESPHome integration changes
+url: https://github.com/DavidvtWout/esp-matter
 files:
     exclude:
         - "**/*"
