@@ -21,7 +21,10 @@
     in
     {
       devShells.${system}.default = pkgs.mkShell {
-        packages = with pkgs; [ uv ];
+        packages = with pkgs; [
+          # Run compote with: uvx --python 3.14 --from idf-component-manager compote
+          uv
+        ];
         shellHook = preCommitCheck.shellHook;
       };
     };
