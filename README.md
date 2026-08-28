@@ -1,8 +1,5 @@
-# Espressif's SDK for Matter
+# Espressif's SDK for Matter with ESPHome integration changes
 
-[![Docker Image](https://github.com/espressif/esp-matter/actions/workflows/docker-image.yml/badge.svg)](https://github.com/espressif/esp-matter/actions/workflows/docker-image.yml)
-&nbsp;
-[![Launchpad Deployment](https://github.com/espressif/esp-matter/actions/workflows/pages.yml/badge.svg)](https://github.com/espressif/esp-matter/actions/workflows/pages.yml)
 ##### Tools
 [![Try With Launchpad](https://img.shields.io/badge/Try_With-ESP_Launchpad-0066CC?logo=espressif)](https://espressif.github.io/esp-launchpad/?flashConfigURL=https://espressif.github.io/esp-matter/launchpad.toml)
 &nbsp;
@@ -20,28 +17,6 @@
 Espressif's SDK for Matter is the official Matter development framework for ESP32 series SoCs. It is built on top of the [open source Matter SDK](https://github.com/project-chip/connectedhomeip/), and provides simplified APIs, commonly used peripherals, tools and utilities for security, manufacturing and production accompanied by exhaustive documentation. It includes rich production references, aimed to simplify the development process of Matter products and enable the users to go to production in the shortest possible time.
 
 [Supported Device Types](SUPPORTED_DEVICE_TYPES.md)
-
-## Supported Matter specification versions
-
-|                                              Matter Specification Version                                              |                               Supported Branch                                |
-| :--------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------: |
-|                                                          v1.4                                                          |   [release/v1.4](https://github.com/espressif/esp-matter/tree/release/v1.4)   |
-|                                                         v1.4.2                                                         | [release/v1.4.2](https://github.com/espressif/esp-matter/tree/release/v1.4.2) |
-| v1.5 ([a51f624](https://github.com/espressif/esp-matter/tree/a51f624f0735aefd0a9cfe1e0039d68de8ce24e2)), v1.5.1 (HEAD) |   [release/v1.5](https://github.com/espressif/esp-matter/tree/release/v1.5)   |
-|                                                          v1.6                                                          |   [release/v1.6](https://github.com/espressif/esp-matter/tree/release/v1.6)   |
-|                                                 v1.7 (Ongoing effort)                                                  |           [main](https://github.com/espressif/esp-matter/tree/main)           |
-
-## Getting the repositories
-
-For efficient cloning of the ESP-Matter repository, please refer
-[Getting the Repositories](https://docs.espressif.com/projects/esp-matter/en/latest/esp32/developing.html#getting-the-repositories)
-section in the ESP-Matter Programming Guide.
-
-## Supported ESP-IDF and connectedhomeip versions
-
-- This SDK currently works with commit [93abd8e68](https://github.com/project-chip/connectedhomeip/tree/93abd8e68) of connectedhomeip.
-- For Matter projects development with this SDK, it is recommended to utilize ESP-IDF [v5.5.5](https://github.com/espressif/esp-idf/tree/v5.5.5).
-- For ESP32S31, ESP32H21, and ESP32H4, it is recommended to utilize ESP-IDF commit [e9da155](https://github.com/espressif/esp-idf/tree/e9da155).
 
 ## Documentation
 
