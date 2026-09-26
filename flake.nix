@@ -22,7 +22,8 @@
     {
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
-          # Run compote with: uvx --python 3.14 --from idf-component-manager compote
+          # Upload:
+          # uvx --python 3.14 --from idf-component-manager compote component upload --namespace davidvtwout --name esp_matter
           uv
         ];
         shellHook = preCommitCheck.shellHook;
