@@ -42,10 +42,43 @@ constexpr size_t kWifiNetworkCommissioningClusterCount = 1;
 constexpr size_t kWifiNetworkCommissioningClusterCount = 0;
 #endif
 
-#ifdef CONFIG_ETHERNET_NETWORK_COMMISSIONING_DRIVER
+#if defined(CONFIG_ETHERNET_NETWORK_COMMISSIONING_DRIVER) || defined(CONFIG_ESP_MATTER_APPLICATION_OWNS_NETWORK_INTERFACE)
 constexpr size_t kEthernetNetworkCommissioningClusterCount = 1;
 #else
 constexpr size_t kEthernetNetworkCommissioningClusterCount = 0;
+#endif
+
+#ifdef CONFIG_ESP_MATTER_APPLICATION_OWNS_NETWORK_INTERFACE
+// The application creates and manages the network interface, so connectedhomeip must not touch the hardware. This
+// driver only reports the single, always connected, Ethernet interface to the Network Commissioning cluster.
+class ApplicationEthernetDriver : public DeviceLayer::NetworkCommissioning::EthernetDriver {
+public:
+    class Iterator final : public DeviceLayer::NetworkCommissioning::NetworkIterator {
+    public:
+        size_t Count() override { return 1; }
+        bool Next(DeviceLayer::NetworkCommissioning::Network &item) override
+        {
+            if (mExhausted) {
+                return false;
+            }
+            mExhausted = true;
+            memcpy(item.networkID, "eth", 3);
+            item.networkIDLen = 3;
+            item.connected = true;
+            return true;
+        }
+        void Release() override { delete this; }
+
+    private:
+        bool mExhausted = false;
+    };
+
+    uint8_t GetMaxNetworks() override { return 1; }
+    DeviceLayer::NetworkCommissioning::NetworkIterator *GetNetworks() override { return new Iterator(); }
+};
+
+// The root node endpoint.
+constexpr EndpointId kApplicationEthernetEndpointId = 0;
 #endif
 
 constexpr size_t kNetworkCommissioningClusterCount = kThreadNetworkCommissioningClusterCount +
@@ -108,6 +141,9 @@ bool endpointIdIsValid(EndpointId endpointId)
 #ifdef CONFIG_ETHERNET_NETWORK_COMMISSIONING_DRIVER
     endpointIdMatched |= endpointId == CONFIG_ETHERNET_NETWORK_ENDPOINT_ID;
 #endif
+#ifdef CONFIG_ESP_MATTER_APPLICATION_OWNS_NETWORK_INTERFACE
+    endpointIdMatched |= endpointId == kApplicationEthernetEndpointId;
+#endif
     return endpointIdMatched;
 }
 
@@ -135,6 +171,12 @@ void ESPMatterNetworkCommissioningClusterServerInitCallback(EndpointId endpointI
         if (endpointId == CONFIG_ETHERNET_NETWORK_ENDPOINT_ID) {
             gServers[index].Create(endpointId, &(DeviceLayer::NetworkCommissioning::ESPEthernetDriver::GetInstance()),
                                    MakeNetworkCommissioningClusterContext());
+        }
+#endif
+#ifdef CONFIG_ESP_MATTER_APPLICATION_OWNS_NETWORK_INTERFACE
+        if (endpointId == kApplicationEthernetEndpointId) {
+            static ApplicationEthernetDriver sEthernetDriver;
+            gServers[index].Create(endpointId, &sEthernetDriver, MakeNetworkCommissioningClusterContext());
         }
 #endif
     }

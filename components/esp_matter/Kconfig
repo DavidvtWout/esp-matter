@@ -243,6 +243,15 @@ menu "ESP Matter"
             If enabled, we will start Matter server when calling esp_matter::start()
             If disabled, the Matter server will not be initialized in esp_matter::start()
 
+    config ESP_MATTER_APPLICATION_OWNS_NETWORK_INTERFACE
+        bool "The application owns the (Ethernet) network interface"
+        default n
+        help
+            Enable this option when the application creates and manages the network interface (for example
+            an Ethernet netif) outside of connectedhomeip. connectedhomeip will not install its own Ethernet
+            driver, so no Network Commissioning driver is available, but the ESP32 DNS-SD implementation
+            (mdns component) is still built and used.
+
     config ESP_MATTER_ENABLE_OPENTHREAD
         bool "Initialize Thread stack and start Thread task when starting ESP-Matter"
         default y
